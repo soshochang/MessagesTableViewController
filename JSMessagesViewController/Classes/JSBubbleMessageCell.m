@@ -234,6 +234,13 @@ static const CGFloat kJSSubtitleLabelHeight = 15.0f;
 
 - (void)setAttributedMessage:(NSAttributedString *)msg
 {
+    // This is a workaround - we set the font size here to get the font for the attributedstring to trigger on first
+    // load, there seems to be a bug somewhere - possible in xcode where the text for the attributed string triggers
+    // when the font does not (and the font will show on a subsequent load), but calling cell.bubbleView.font here
+    // causes it to trigger the 30.0 figure is arbitrary
+    // this font size needs to be set prior to the attributedtext being set
+    self.bubbleView.font = [UIFont systemFontOfSize:30.0f];
+    
     self.bubbleView.textView.attributedText = msg;
 }
 
